@@ -113,12 +113,23 @@
     
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Image x:Name="pictureBoxVideo"
-               Grid.Row="0"
+        <Grid Grid.Row="0"
+              x:Name="ToolBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75*"></ColumnDefinition>
+                <ColumnDefinition Width="25*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="VideoSourcesComboBox" Grid.Column="0" Style="{StaticResource BigComboBoxStyle}"></ComboBox>
+            <ComboBox x:Name="ResolutionComboBox" Grid.Column="1" Style="{StaticResource BigComboBoxStyle}"></ComboBox>
+        </Grid>
+
+        <Image Grid.Row="1"
+               x:Name="pictureBoxVideo"
                SnapsToDevicePixels="False"
                Stretch="UniformToFill">
             <Image.RenderTransform>
@@ -126,7 +137,7 @@
             </Image.RenderTransform>
         </Image>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25*"></RowDefinition>
                 <RowDefinition Height="25*"></RowDefinition>
@@ -134,16 +145,18 @@
                 <RowDefinition Height="25*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*"></ColumnDefinition>
-                <ColumnDefinition Width="70*"></ColumnDefinition>
-                <ColumnDefinition Width="15*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Button x:Name="TakeSnapshotButton"
                     Grid.Row="0" Grid.Column="0"
                     Content="Take Snapshot"
                     Style="{StaticResource BigButtonStyleOpaque}"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     Click="TakeSnapshotButton_Click">
             </Button>
 
@@ -183,31 +196,28 @@
             </Button>
 
             <Button x:Name="SaveSnapshotButton"
-                    Grid.Row="0"  Grid.Column="2"
+                    Grid.Row="0"  Grid.Column="5"
                     Content="Save Snapshot"
                     Style="{StaticResource BigButtonStyleOpaque}"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     Click="SaveSnapshotButton_Click">
             </Button>
 
             <Button x:Name="ShowInViewerButton"
-                    Grid.Row="1"  Grid.Column="2"
+                    Grid.Row="1"  Grid.Column="5"
                     Content="Show in Viewer"
                     Style="{StaticResource BigButtonStyleOpaque}"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     Click="ShowInViewerButton_Click">
             </Button>
 
             <Button x:Name="HiLoResolutionButton"
-                    Grid.Row="2"
-                    Grid.Column="3"
+                    Grid.Row="2" Grid.Column="5"
                     Content="Low Resolution"
                     Style="{StaticResource BigButtonStyleOpaque}"
                     Click="HiLoResolutionButton_Click">
             </Button>
 
             <Button x:Name="ZoomOutSnapshotButton"
-                    Grid.Row="3" Grid.Column="2"
+                    Grid.Row="3" Grid.Column="5"
                     Style="{StaticResource BigButtonStyleOpaque}"
                     Click="ZoomOutSnapshotButton_Click">
                 <Button.Content>
@@ -218,17 +228,24 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-        </Grid>
 
-        <Grid x:Name="ToolBar" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="75*"></ColumnDefinition>
-                <ColumnDefinition Width="25*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
 
-            <ComboBox x:Name="VideoSourcesComboBox" Grid.Column="0" Style="{StaticResource BigComboBoxStyle}"></ComboBox>
-            <ComboBox x:Name="ResolutionComboBox" Grid.Column="1" Style="{StaticResource BigComboBoxStyle}"></ComboBox>
+
+            <Button x:Name="TakeSnapshotBottomButton"
+                    Grid.Row="3" Grid.Column="3"
+                    Content="Take Snapshot"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    Click="TakeSnapshotButton_Click">
+            </Button>
             
+            <Button x:Name="SaveSnapshotBottomButton"
+                    Grid.Row="3"  Grid.Column="4"
+                    Content="Save Snapshot"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    Click="SaveSnapshotButton_Click">
+            </Button>
+
         </Grid>
+
     </Grid>
 </Window>

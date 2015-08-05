@@ -146,6 +146,7 @@ namespace AforgeCameraWPF
 
                 // Disable the save button.
                 this.SaveSnapshotButton.IsEnabled = false;
+                this.SaveSnapshotBottomButton.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -359,9 +360,11 @@ namespace AforgeCameraWPF
 
             // Toggle the button content
             this.TakeSnapshotButton.Content = "View Finder";
+            this.TakeSnapshotBottomButton.Content = "View Finder";
 
             // Enable save
             this.SaveSnapshotButton.IsEnabled = true;
+            this.SaveSnapshotBottomButton.IsEnabled = true;
         }
 
         private void ReturnToViewFinder()
@@ -370,9 +373,11 @@ namespace AforgeCameraWPF
             {
                 // Toggle the snapshot button content
                 this.TakeSnapshotButton.Content = "Take Snapshot";
+                this.TakeSnapshotBottomButton.Content = "Take Snapshot";
 
                 // Disable save.
                 this.SaveSnapshotButton.IsEnabled = false;
+                this.SaveSnapshotBottomButton.IsEnabled = false;
             }
             else
             {
@@ -400,9 +405,11 @@ namespace AforgeCameraWPF
 
                         // Toggle the snapshot button content
                         this.TakeSnapshotButton.Content = "Take Snapshot";
+                        this.TakeSnapshotBottomButton.Content = "Take Snapshot";
 
                         // Disable save.
                         this.SaveSnapshotButton.IsEnabled = false;
+                        this.SaveSnapshotBottomButton.IsEnabled = false;
                     }
                 }
                 else
@@ -413,9 +420,11 @@ namespace AforgeCameraWPF
 
                     // Toggle the snapshot button content
                     this.TakeSnapshotButton.Content = "Take Snapshot";
+                    this.TakeSnapshotBottomButton.Content = "Take Snapshot";
 
                     // Disable save.
                     this.SaveSnapshotButton.IsEnabled = false;
+                    this.SaveSnapshotBottomButton.IsEnabled = false;
                 }
             }
 
@@ -554,9 +563,11 @@ namespace AforgeCameraWPF
 
                                 // Toggle the button content.
                                 this.TakeSnapshotButton.Content = "Take Snapshot";
+                                this.TakeSnapshotBottomButton.Content = "Take Snapshot";
 
                                 // Enable save
                                 this.SaveSnapshotButton.IsEnabled = false;
+                                this.SaveSnapshotBottomButton.IsEnabled = false;
                             }
                             else
                             {
