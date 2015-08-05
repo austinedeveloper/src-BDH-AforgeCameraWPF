@@ -4,6 +4,7 @@
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         Title="Inspector Gadget"
         Height="768" Width="1366"
+        Icon="IGIcon1.ico"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen">
     
