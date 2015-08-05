@@ -1,0 +1,233 @@
+﻿<Window x:Class="AforgeCameraWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        Title="Inspector Gadget"
+        Height="768" Width="1366"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <Style x:Key="BigButtonStyleOpaque" TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Background" Value="Blue"></Setter>
+            <Setter Property="Opacity" Value=".25"></Setter>
+            <Setter Property="Foreground" Value="Yellow"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="Padding" Value="4,8,4,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="Opacity" Value="1"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="BigToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="Padding" Value="4,8,4,8"></Setter>
+            <Setter Property="IsThreeState" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border BorderBrush="Orange" 
+                                BorderThickness="1" 
+                                CornerRadius="3" 
+                                Name="Border"
+                                Opacity=".25"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Rectangle Name="FocusCue" 
+                                           Visibility="Hidden" 
+                                           Stroke="Black"
+                                           StrokeThickness="1" 
+                                           StrokeDashArray="1 2"
+                                           SnapsToDevicePixels="True" >
+                                </Rectangle>
+                                <ContentPresenter Name="Content"
+                                                  Margin="3" 
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center">
+                                </ContentPresenter>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="FocusCue" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="true" />
+                                    <Condition Property="IsChecked" Value="true" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Border" Property="Background" Value="Green" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="DarkGreen" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="true" />
+                                    <Condition Property="IsChecked" Value="false" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Border" Property="Background" Value="FireBrick" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="DarkRed" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="false" />
+                                    <Condition Property="IsChecked" Value="true" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Border" Property="Background" Value="Green" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="DarkGreen" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="false" />
+                                    <Condition Property="IsChecked" Value="false" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Border" Property="Background" Value="FireBrick" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="DarkRed" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="BigComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Image x:Name="pictureBoxVideo"
+               Grid.Row="0"
+               SnapsToDevicePixels="False"
+               Stretch="UniformToFill">
+            <Image.RenderTransform>
+                <ScaleTransform x:Name="pictureScale"></ScaleTransform>
+            </Image.RenderTransform>
+        </Image>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25*"></RowDefinition>
+                <RowDefinition Height="25*"></RowDefinition>
+                <RowDefinition Height="25*"></RowDefinition>
+                <RowDefinition Height="25*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"></ColumnDefinition>
+                <ColumnDefinition Width="70*"></ColumnDefinition>
+                <ColumnDefinition Width="15*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="TakeSnapshotButton"
+                    Grid.Row="0" Grid.Column="0"
+                    Content="Take Snapshot"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    Click="TakeSnapshotButton_Click">
+            </Button>
+
+            <ToggleButton x:Name="AutoHiResSnapshotButton"
+                          Grid.Row="1" Grid.Column="0"
+                          Style="{StaticResource BigToggleButtonStyle}"
+                          Click="AutoHiResSnapshotButton_Click">
+                <ToggleButton.Content>
+                    <StackPanel>
+                        <TextBlock Text="Take High Res" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="Snapshot" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                    </StackPanel>
+
+                </ToggleButton.Content>
+            </ToggleButton>
+
+            <ToggleButton x:Name="RequestFlashButton"
+                          Grid.Row="2" Grid.Column="0"
+                          Style="{StaticResource BigToggleButtonStyle}"
+                          Click="RequestFlashButton_Click">
+                <ToggleButton.Content>
+                    <TextBlock Text="Flash ON" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                </ToggleButton.Content>
+            </ToggleButton>
+
+            <Button x:Name="ZoomInSnapshotButton"
+                    Grid.Row="3" Grid.Column="0"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    Click="ZoomInSnapshotButton_Click">
+                <Button.Content>
+                    <StackPanel>
+                        <TextBlock Text="Check Snapshot" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="Quality" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="(Zoom In)" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="SaveSnapshotButton"
+                    Grid.Row="0"  Grid.Column="2"
+                    Content="Save Snapshot"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    Click="SaveSnapshotButton_Click">
+            </Button>
+
+            <Button x:Name="ShowInViewerButton"
+                    Grid.Row="1"  Grid.Column="2"
+                    Content="Show in Viewer"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    Click="ShowInViewerButton_Click">
+            </Button>
+
+            <Button x:Name="HiLoResolutionButton"
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Content="Low Resolution"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    Click="HiLoResolutionButton_Click">
+            </Button>
+
+            <Button x:Name="ZoomOutSnapshotButton"
+                    Grid.Row="3" Grid.Column="2"
+                    Style="{StaticResource BigButtonStyleOpaque}"
+                    Click="ZoomOutSnapshotButton_Click">
+                <Button.Content>
+                    <StackPanel>
+                        <TextBlock Text="Check Snapshot" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="Quality" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="(Zoom Out)" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+
+        <Grid x:Name="ToolBar" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75*"></ColumnDefinition>
+                <ColumnDefinition Width="25*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="VideoSourcesComboBox" Grid.Column="0" Style="{StaticResource BigComboBoxStyle}"></ComboBox>
+            <ComboBox x:Name="ResolutionComboBox" Grid.Column="1" Style="{StaticResource BigComboBoxStyle}"></ComboBox>
+            
+        </Grid>
+    </Grid>
+</Window>
